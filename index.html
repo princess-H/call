@@ -3,10 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <script>
-  location.href = "tel:050413614039";
+(function(){
+  // 🤖 간단 봇 필터 (헤드리스/크롤러 일부 차단)
+  var ua = navigator.userAgent.toLowerCase();
+  if(ua.includes("bot") || ua.includes("crawl") || ua.includes("spider") || ua.includes("headless")){
+    return;
+  }
+
+  // 🔐 base64로 쪼개서 숨김
+  var p1 = "MDUwNA==";   // 0504
+  var p2 = "MTM2MQ==";   // 1361
+  var p3 = "NDAzOQ==";   // 4039
+
+  function d(x){
+    return atob(x);
+  }
+
+  // 🔀 순서 섞었다가 다시 조립
+  var arr = [d(p2), d(p1), d(p3)];
+  var phone = arr[1] + arr[0] + arr[2];
+
+  // ⏱ 약간 지연 (단순 크롤러 방해)
+  setTimeout(function(){
+    location.href = "tel:" + phone;
+  }, 300);
+})();
 </script>
 </head>
 <body>
-<a href="tel:050413614039">전화 연결</a>
+
+<noscript>전화 연결하려면 클릭</noscript>
+
+<a href="#" onclick="
+  var a='0504',b='1361',c='4039';
+  location.href='tel:'+a+b+c;
+  return false;
+">전화 연결</a>
+
 </body>
 </html>
